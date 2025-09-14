@@ -26,8 +26,11 @@ def run_process():
     return
   
   try:
+    header = int(entry_header.get())
+    nrows = int(entry_nrows.get())
+
     # Carrega a planilha
-    df = load_excel(file_path)
+    df = load_excel(file_path, header=header, nrows=nrows)
     # Renomeia o cabeçalho
     df = rename_headers(df)
     # Corrije os dados errados
@@ -50,7 +53,7 @@ def run_process():
     messagebox.showerror('Erro', str(e))
 
 def main():
-  global entry
+  global entry, entry_header, entry_nrows
 
   root = tk.Tk()
   root.title('Automação Excel')
@@ -61,6 +64,22 @@ def main():
 
   btn_select = tk.Button(root, text='Selecionar uma planilha', command=select_file)
   btn_select.pack(pady=5)
+
+  frame_header = tk.Frame(root)
+  frame_header.pack(pady=5)
+  tk.Label(frame_header, text="Linha do cabeçalho:").pack(side=tk.LEFT, padx=5)
+  entry_header = tk.Spinbox(frame_header, from_=0, to=100, width=5)
+  entry_header.delete(0, tk.END)
+  entry_header.insert(0, "17")
+  entry_header.pack(side=tk.LEFT)
+
+  frame_nrows = tk.Frame(root)
+  frame_nrows.pack(pady=5)
+  tk.Label(frame_nrows, text="Quantidade de dados:").pack(side=tk.LEFT, padx=5)
+  entry_nrows = tk.Spinbox(frame_nrows, from_=1, to=1000, width=5)
+  entry_nrows.delete(0, tk.END)
+  entry_nrows.insert(0, "15")  # valor padrão
+  entry_nrows.pack(side=tk.LEFT)
 
   btn_run = tk.Button(
     root,
