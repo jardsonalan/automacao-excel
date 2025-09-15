@@ -7,8 +7,6 @@ from data_cleaner import rename_headers, correction_datas
 from excel_utils import filter_datas, save_to_excel
 from excel_formatter import format_excel
 
-OUTPUT_DIR = './data/processed'
-
 def select_file():
   file_path = filedialog.askopenfilename(
     title='Selecione uma planilha Excel',
@@ -38,11 +36,18 @@ def run_process():
     # Filtra os dados necessários
     df = filter_datas(df)
 
-    os.makedirs(OUTPUT_DIR, exist_ok=True)
-    file_name = os.path.splitext(os.path.basename(file_path))[0]
-    output_file = os.path.join(OUTPUT_DIR, f'{file_name}-tratado.xlsx')
-    save_to_excel(df, output_file)
+    output_file = filedialog.asksaveasfilename(
+        title="Salvar planilha tratada como...",
+        defaultextension=".xlsx",
+        filetypes=[("Excel files", "*.xlsx")],
+        initialfile=os.path.splitext(os.path.basename(file_path))[0] + "-tratado.xlsx"
+    )
 
+    if not output_file:
+      messagebox.showwarning("Aviso", "Operação cancelada pelo usuário!")
+      return
+    
+    save_to_excel(df, output_file)
     format_excel(output_file)
 
     messagebox.showinfo(
