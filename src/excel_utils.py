@@ -2,7 +2,7 @@ import pandas as pd
 import os
 
 def filter_datas(df: pd.DataFrame) -> pd.DataFrame:
-  return df[['Ôxidos', '%', 'Elementos', '%%']]
+  return df[['Óxidos', '%', 'Elementos', '%%']]
 
 def save_to_excel(datas_filter: pd.DataFrame,
                   path: str,

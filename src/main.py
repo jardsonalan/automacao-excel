@@ -133,7 +133,7 @@ def main():
     relief='flat',
     width=50
   )
-  btn_run.pack(pady=10)
+  btn_run.pack(pady=10, padx=10)
 
   root.mainloop()
 

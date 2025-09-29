@@ -2,7 +2,7 @@ import pandas as pd
 
 def rename_headers(df: pd.DataFrame) -> pd.DataFrame:
   return df.rename(columns={
-    'Compound': 'Ôxidos',
+    'Compound': 'Óxidos',
     'm/m%': '%',
     'm/m%.1': '%%',
     'El': 'Elementos'
